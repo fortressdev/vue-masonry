@@ -68,21 +68,21 @@ VueMasonryPlugin.install = function (Vue, options) {
       }
 
       const masonryDestroyHandler = function (eventData) {
-        Events.$off(`${EVENT_ADD}__${masonryId}`, masonryRedrawHandler)
-        Events.$off(`${EVENT_REMOVE}__${masonryId}`, masonryRedrawHandler)
-        Events.$off(`${EVENT_IMAGE_LOADED}__${masonryId}`, masonryRedrawHandler)
-        Events.$off(`${EVENT_DESTROY}__${masonryId}`, masonryDestroyHandler)
+        Events.$off("".concat(EVENT_ADD, "__").concat(masonryId), masonryRedrawHandler);
+        Events.$off("".concat(EVENT_REMOVE, "__").concat(masonryId), masonryRedrawHandler);
+        Events.$off("".concat(EVENT_IMAGE_LOADED, "__").concat(masonryId), masonryRedrawHandler);
+        Events.$off("".concat(EVENT_DESTROY, "__").concat(masonryId), masonryDestroyHandler);
         masonry.destroy()
       }
 
-      Events.$on(`${EVENT_ADD}__${masonryId}`, masonryRedrawHandler)
-      Events.$on(`${EVENT_REMOVE}__${masonryId}`, masonryRedrawHandler)
-      Events.$on(`${EVENT_IMAGE_LOADED}__${masonryId}`, masonryRedrawHandler)
-      Events.$on(`${EVENT_DESTROY}__${masonryId}`, masonryDestroyHandler)
+      Events.$on("".concat(EVENT_ADD, "__").concat(masonryId), masonryRedrawHandler);
+      Events.$on("".concat(EVENT_REMOVE, "__").concat(masonryId), masonryRedrawHandler);
+      Events.$on("".concat(EVENT_IMAGE_LOADED, "__").concat(masonryId), masonryRedrawHandler);
+      Events.$on("".concat(EVENT_DESTROY, "__").concat(masonryId), masonryDestroyHandler);
     },
     unbind: function (el, binding) {
       const masonryId = binding.value || defaultId
-      Events.$emit(`${EVENT_DESTROY}__${masonryId}`)
+      Events.$emit("".concat(EVENT_DESTROY, "__").concat(masonryId));
     }
   })
 
@@ -90,26 +90,26 @@ VueMasonryPlugin.install = function (Vue, options) {
 
     inserted: function (el, binding) {
       const masonryId = binding.value || defaultId
-      Events.$emit(`${EVENT_ADD}__${masonryId}`, {
+      Events.$emit("".concat(EVENT_ADD, "__").concat(masonryId), {
         'element': el
-      })
+      });
       // eslint-disable-next-line
       new ImageLoaded(el, function () {
-        Events.$emit(`${EVENT_IMAGE_LOADED}__${masonryId}`, {
+        Events.$emit("".concat(EVENT_IMAGE_LOADED, "__").concat(masonryId), {
           'element': el
-        })
+        });
       })
     },
     unbind: function (el, binding) {
       const masonryId = binding.value || defaultId
-      Events.$emit(`${EVENT_REMOVE}__${masonryId}`, {
+      Events.$emit("".concat(EVENT_REMOVE, "__").concat(masonryId), {
         'element': el
-      })
+      });
     }
   })
 
   Vue.prototype.$redrawVueMasonry = function (id) {
     const masonryId = id || defaultId
-    Events.$emit(`${EVENT_ADD}__${masonryId}`)
+    Events.$emit("".concat(EVENT_ADD, "__").concat(masonryId));
   }
 }
